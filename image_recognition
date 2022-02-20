@@ -1,0 +1,40 @@
+# Image Recognotion System
+#import libraries
+import keras
+from keras import backend as k 
+from keras.layers.core import Dense, Activation
+from keras.optimizers import Adam
+from keras.metrics import categorical_crossentropy
+from keras.preprocessing.image import ImageDataGenerator
+from keras.preprocessing import image
+from keras.models import Model
+from keras.applications import imagenet_utils
+import numpy as np
+from IPython.display import Image
+#import object detection model names mobilenet
+mobile=keras.applications.mobilenet.MobileNet()
+def prepare_image(file):
+  img_path=''
+  img=image.load_img(img_path+file,target_size=(224,224))
+  img_array=image.img_to_array(img)
+  img_array_expanded_dims=np.expand_dims(img_array,axis=0)
+  return keras.applications.mobilenet.preprocess_input(img_array_expanded_dims)
+
+Image(filename='g_s_dog.jpg')
+#prediction
+preprocessed_image=prepare_image('g_s_dog.jpg')
+predictions=mobile.predict(preprocessed_image)
+result=imagenet_utils.decode_predictions(predictions)
+result
+Image(filename='p_cat.jpg')
+#prediction
+preprocessed_image=prepare_image('p_cat.jpg')
+predictions=mobile.predict(preprocessed_image)
+result=imagenet_utils.decode_predictions(predictions)
+result
+Image(filename='cat.jpg')
+#prediction
+preprocessed_image=prepare_image('cat.jpg')
+predictions=mobile.predict(preprocessed_image)
+result=imagenet_utils.decode_predictions(predictions)
+result
